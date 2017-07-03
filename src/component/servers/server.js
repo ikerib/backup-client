@@ -4,6 +4,8 @@
 import React, { Component } from 'react';
 import './server.css';
 
+const axios = require('axios');
+
 class Server extends Component {
     constructor(props, context) {
         super(props, context);
@@ -14,9 +16,12 @@ class Server extends Component {
     }
 
     componentDidMount() {
-        fetch('http://localhost:3000/servers')
-            .then(response => response.json())
-            .then((response) => { this.setState({ response }); });
+        const url = 'http://localhost:9000/servers';
+        axios.get(url)
+            .then(res => {
+                const response = res.data.map(obj => obj);
+                this.setState({ response });
+            });
     }
 
     render() {
