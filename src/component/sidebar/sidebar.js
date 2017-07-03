@@ -1,11 +1,9 @@
 import React, {Component} from 'react';
-import './App.css';
-import {Treebeard} from 'react-treebeard';
 import styles from './styles';
-
+import {Treebeard} from 'react-treebeard';
 const axios = require('axios');
 
-class App extends Component {
+class Sidebar extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -16,7 +14,7 @@ class App extends Component {
     }
 
     componentDidMount() {
-        const url = 'http://localhost:9000/ls';
+        const url = 'http://localhost:9000/lsdir';
         axios.get(url)
             .then(res => {
                 const myfs = res.data;
@@ -43,4 +41,4 @@ class App extends Component {
     }
 }
 
-export default App;
+export default Sidebar;

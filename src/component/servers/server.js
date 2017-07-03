@@ -29,7 +29,7 @@ class Server extends Component {
             return <div>Loading</div>;
         }
         return (
-            <ul className="nav nav-sidebar">
+            <ul className="nav navbar-nav navbar-right">
 
                 {
                     this.state.response.map((y) => {
