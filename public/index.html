@@ -5,12 +5,21 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="theme-color" content="#000000">
-    <!--
-      manifest.json provides metadata used when your web app is added to the
-      homescreen on Android. See https://developers.google.com/web/fundamentals/engage-and-retain/web-app-manifest/
-    -->
+
     <link rel="manifest" href="%PUBLIC_URL%/manifest.json">
     <link rel="shortcut icon" href="%PUBLIC_URL%/favicon.ico">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+    <style type="text/css">
+      * {
+        box-sizing: border-box;
+      }
+      body, html {
+        /*background-color: #21252B;*/
+        font-family: 'lucida grande',tahoma,verdana,arial,sans-serif;
+        color: white;
+      }
+      h1 { padding: 0 20px; }
+    </style>
     <!--<link rel="stylesheet" href="%PUBLIC_URL%/css/bootstrap.min.css">-->
     <!--<link rel="stylesheet" href="%PUBLIC_URL%/css/bootstrap-theme.min.css">-->
     <!--<link rel="stylesheet" href="%PUBLIC_URL%/css/style.css">-->
@@ -59,13 +68,15 @@
     </div>
     </nav>
 
-    <div class="container-fluid">
+    <div class="container-fluid" id="container">
       <div class="row">
-        <div class="col-sm-3 col-md-2 sidebar" id="sidebar">
+        <!--<div class="col-sm-4 col-md-3 sidebar" id="sidebar">-->
+        <div class="col-sm-4">
 
         </div>
 
-        <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+        <!--<div class="col-sm-8 col-sm-offset-4 col-md-9 col-md-offset-3 main">-->
+        <div class="col-sm-8">
           <h1 className="page-header">Seguratun Kopia kudeatzailea</h1>
           <div id="root"></div>
 

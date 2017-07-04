@@ -1,14 +1,27 @@
+'use strict';
 
 export default {
+
+    viewer: {
+        base: {
+            fontSize: '12px',
+                whiteSpace: 'pre-wrap',
+                backgroundColor: '#282C34',
+                border: 'solid 1px black',
+                padding: '20px',
+                color: '#9DA5AB',
+                minHeight: '250px'
+        }
+    },
     tree: {
         base: {
             listStyle: 'none',
-            backgroundColor: '#fff',
+            backgroundColor: '#21252B',
             margin: 0,
             padding: 0,
             color: '#9DA5AB',
             fontFamily: 'lucida grande ,tahoma,verdana,arial,sans-serif',
-            fontSize: '14px'
+            fontSize: '10px'
         },
         node: {
             base: {

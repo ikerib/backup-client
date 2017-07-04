@@ -1,9 +1,10 @@
+'use strict';
 
 export default {
     tree: {
         base: {
             listStyle: 'none',
-            backgroundColor: '#fff',
+            backgroundColor: '#21252B',
             margin: 0,
             padding: 0,
             color: '#9DA5AB',
