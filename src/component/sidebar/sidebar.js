@@ -49,7 +49,6 @@ class Sidebar extends Component {
         }
         this.setState({cursor: node});
         if ((node!==null)&&(node!==undefined)) {
-            // console.log(node.path);
             this.props.onFsChange(node.path);
         }
 
@@ -59,9 +58,7 @@ class Sidebar extends Component {
         const {data: stateData, cursor} = this.state;
         return (
             <div>
-                <h4>da: {this.state.cursor.path}</h4>
                 <Treebeard data={this.state.myfs} onToggle={this.onToggle} style={styles} />
-                {/*<Treebeard data={this.state.cursor.path} onToggle={this.onToggle} onClick={this.onClick} style={styles} />*/}
             </div>
 
         );

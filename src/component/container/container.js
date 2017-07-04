@@ -14,7 +14,6 @@ class Container extends Component {
 
     handleFsChange(path) {
         if ((path!==null) && (path!==undefined)) {
-            console.log("PATH:" + path);
             this.setState({selectedFs: path});
         }
     }
