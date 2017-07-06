@@ -25,10 +25,8 @@ class Server extends Component {
             });
     }
 
-    handleClick(e) {
-        console.log("click! click! click!");
-        console.log(e);
-        this.props.onServerChange(e);
+    handleClick(srv) {
+        this.props.onServerChange(srv);
     }
 
     render() {
@@ -39,10 +37,8 @@ class Server extends Component {
             <ul className="nav navbar-nav navbar-right">
 
                 {
-                    this.state.response.map((y) => {
-                        console.log("***********");
-                        console.log({y});
-                        return (<li><a href="#" id={y} onClick={this.handleClick}>{y}</a></li>);
+                    this.state.response.map((item, i) => {
+                        return (<li key={i} ><a href="#" data-id={item} onClick={() => this.handleClick({item})}>{item}</a></li>);
                     })
                 }
             </ul>
