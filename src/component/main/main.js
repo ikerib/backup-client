@@ -7,9 +7,20 @@ class Main extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            server: null,
             selectedFs: null,
         };
         this.handleFsChange = this.handleFsChange.bind(this);
+        this.handleServerChange = this.handleServerChange.bind(this);
+    }
+
+    handleServerChange(srv) {
+        console.log("klik egiten!!!!");
+        console.log(srv);
+        if ((srv!==null) && (srv!==undefined)) {
+            // this.setState({server: srv});
+            console.log(srv);
+        }
     }
 
     handleFsChange(path) {
@@ -35,7 +46,7 @@ class Main extends Component {
                     </div>
                     <div id="navbar" className="navbar-collapse collapse">
                         <ul className="nav navbar-nav navbar-right">
-                            <Server/>
+                            <Server onServerChange={this.handleServerChange} />
                         </ul>
                     </div>
                 </div>

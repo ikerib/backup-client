@@ -13,6 +13,7 @@ class Server extends Component {
         this.state = {
             response: [],
         };
+        this.handleClick = this.handleClick.bind(this);
     }
 
     componentDidMount() {
@@ -24,6 +25,12 @@ class Server extends Component {
             });
     }
 
+    handleClick(e) {
+        console.log("click! click! click!");
+        console.log(e);
+        this.props.onServerChange(e);
+    }
+
     render() {
         if (!this.state.response) {
             return <div>Loading</div>;
@@ -33,7 +40,9 @@ class Server extends Component {
 
                 {
                     this.state.response.map((y) => {
-                        return (<li><a>{y}</a></li>);
+                        console.log("***********");
+                        console.log({y});
+                        return (<li><a href="#" id={y} onClick={this.handleClick}>{y}</a></li>);
                     })
                 }
             </ul>
