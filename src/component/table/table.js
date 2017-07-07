@@ -1,4 +1,6 @@
 import React, {Component} from 'react';
+import Moment from 'moment';
+
 const axios = require('axios');
 
 
@@ -17,19 +19,10 @@ class Table extends Component {
         } else {
             url = 'http://localhost:9000/ls?dir=' + srv;
         }
-        console.log(url);
         axios.get(url)
             .then(res => {
                 const myfs = res.data;
-                console.log(myfs);
-
                 this.setState({ myfs });
-
-                this.state.myfs.children.map((item, i) => {
-                    console.log(i);
-                    console.log(item);
-                })
-
             });
     }
 
@@ -48,9 +41,6 @@ class Table extends Component {
 
     render() {
         const nirefs = this.state.myfs.children;
-        console.log("nirefs da:");
-        console.log(nirefs);
-        console.log(typeof(nirefs));
         if (nirefs === undefined) {
             return (
                 <h5>No data.</h5>
@@ -61,7 +51,11 @@ class Table extends Component {
                 <thead>
                 <tr>
                     <th>Fitxategia</th>
+                    <th>Mota</th>
                     <th>Tamaina</th>
+                    <th>Baimenak</th>
+                    <th>Sortua</th>
+                    <th>Aldatua</th>
                 </tr>
                 </thead>
 
@@ -73,10 +67,23 @@ class Table extends Component {
                                 <td>
                                     <i className={item.type==="directory" ? "fa fa-folder" : "fa fa-file-text" } style={{marginRight: '5px'}} />
                                     {item.name}
-                                    </td>
+                                </td>
+                                <td>
+                                    {item.type}
+                                </td>
                                 <td>
                                     { (item.size/1024).toFixed(2) } Kb
                                 </td>
+                                <td>
+                                    { item.mode }
+                                </td>
+                                <td>
+                                    {Moment(item.birthtime).format("YYYY-MM-DD HH:mm:ss")}
+                                </td>
+                                <td>
+                                    {Moment(item.mtime).format("YYYY-MM-DD HH:mm:ss")}
+                                </td>
+
                             </tr>);
                     })
                 }
