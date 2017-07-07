@@ -10,6 +10,23 @@ class Table extends Component {
         this.state = {
             myfs: []
         };
+        this.handleDownload = this.handleDownload.bind(this);
+    }
+
+    handleDownload(file) {
+        console.log(file.item.path);
+        const filename = file.item.path;
+        // fake server request, getting the file url as response
+        setTimeout(() => {
+            const response = {
+                file: filename,
+            };
+            // server sent the url to the file!
+            // now, let's download:
+            // window.location.href = response.filename;
+            // you could also do:
+            window.open(response.file);
+        }, 100);
     }
 
     updateTable(srv) {
@@ -65,8 +82,10 @@ class Table extends Component {
                         return (
                             <tr key={i} >
                                 <td>
-                                    <i className={item.type==="directory" ? "fa fa-folder" : "fa fa-file-text" } style={{marginRight: '5px'}} />
-                                    {item.name}
+                                    <a onClick={() => this.handleDownload({item})}>
+                                        <i className={item.type==="directory" ? "fa fa-folder" : "fa fa-file-text" } style={{marginRight: '5px'}} />
+                                        {item.name}
+                                    </a>
                                 </td>
                                 <td>
                                     {item.type}
