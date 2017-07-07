@@ -30,7 +30,7 @@ class Sidebar extends Component {
     }
 
     componentDidMount() {
-        const url = 'http://localhost:9000/lsdir';
+        const url = 'http://localhost:9000/lsdir?dir=/mnt/nfs/Aplik';
         axios.get(url)
             .then(res => {
                 const myfs = res.data;
@@ -41,7 +41,7 @@ class Sidebar extends Component {
     onToggle(node, toggled) {
         if (this.state.cursor) {
             this.setState({cursor: {active: false}});
-            this.state.cursor.active = false;
+            // this.state.cursor.active = false;
         }
         node.active = true;
         if (node.children) {
@@ -55,7 +55,7 @@ class Sidebar extends Component {
     }
 
     render() {
-        const {data: stateData, cursor} = this.state;
+        const {cursor} = this.state;
         return (
             <div>
                 <Treebeard data={this.state.myfs} onToggle={this.onToggle} style={styles} />

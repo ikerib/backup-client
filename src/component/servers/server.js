@@ -38,7 +38,7 @@ class Server extends Component {
 
                 {
                     this.state.response.map((item, i) => {
-                        return (<li key={i} ><a href="#" data-id={item} onClick={() => this.handleClick({item})}>{item}</a></li>);
+                        return (<li key={i} ><a data-id={item} onClick={() => this.handleClick({item})}>{item}</a></li>);
                     })
                 }
             </ul>
