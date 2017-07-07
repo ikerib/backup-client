@@ -38,8 +38,6 @@ class Sidebar extends Component {
             url = 'http://localhost:9000/lsdir?dir=/mnt/nfs/' + srv;
         }
 
-        console.log("Axios URL => " + url);
-
         axios.get(url)
             .then(res => {
                 const myfs = res.data;

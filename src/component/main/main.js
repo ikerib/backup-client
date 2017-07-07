@@ -15,10 +15,8 @@ class Main extends Component {
     }
 
     static handleServerChange(srv) {
-        console.log("handleServerChange");
         if ((srv!==null) && (srv!==undefined)) {
             this.setState({server: srv.item});
-            console.log("server berria => " + srv.item);
         }
     }
 
@@ -61,7 +59,7 @@ class Main extends Component {
                         <h4 className="sub-header">Path: {this.state.selectedFs}</h4>
 
                         <div className="table-responsive">
-                            <Table />
+                            <Table selectedFs={this.state.selectedFs} />
                         </div>
                     </div>
                 </div>
