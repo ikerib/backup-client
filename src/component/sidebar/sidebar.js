@@ -24,18 +24,38 @@ class Sidebar extends Component {
         this.state = {
             cursor: {path:"/mnt/nfs/Aplik/.zfs/snapshot/"},
             selectedFs: this.props.selectedFs,
+            server: this.props.server,
             myfs: []
         };
         this.onToggle = this.onToggle.bind(this);
     }
 
-    componentDidMount() {
-        const url = 'http://localhost:9000/lsdir?dir=/mnt/nfs/Aplik';
+    updateTree(srv) {
+        let url = null;
+        if ( srv === null) {
+            url = 'http://localhost:9000/lsdir?dir=/tmp/'
+        } else {
+            url = 'http://localhost:9000/lsdir?dir=/mnt/nfs/' + srv;
+        }
+
+        console.log("Axios URL => " + url);
+
         axios.get(url)
             .then(res => {
                 const myfs = res.data;
                 this.setState({ myfs });
             });
+    }
+
+    componentDidMount() {
+        this.updateTree(null);
+    }
+
+    componentWillReceiveProps(nextProps) {
+        if(JSON.stringify(this.props.server) !== JSON.stringify(nextProps.server)) // Check if it's a new user, you can also use some unique, like the ID
+        {
+            this.updateTree(nextProps.server);
+        }
     }
 
     onToggle(node, toggled) {
@@ -55,7 +75,6 @@ class Sidebar extends Component {
     }
 
     render() {
-        const {cursor} = this.state;
         return (
             <div>
                 <Treebeard data={this.state.myfs} onToggle={this.onToggle} style={styles} />

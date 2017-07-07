@@ -15,8 +15,10 @@ class Main extends Component {
     }
 
     static handleServerChange(srv) {
+        console.log("handleServerChange");
         if ((srv!==null) && (srv!==undefined)) {
-            this.setState({server: srv});
+            this.setState({server: srv.item});
+            console.log("server berria => " + srv.item);
         }
     }
 
@@ -52,7 +54,7 @@ class Main extends Component {
             <div className="container-fluid">
                 <div className="row">
                     <div className="col-sm-3 col-md-2 sidebar">
-                        <Sidebar selectedFs={this.state.selectedFs} onFsChange={this.handleFsChange} />
+                        <Sidebar server={this.state.server} selectedFs={this.state.selectedFs} onFsChange={this.handleFsChange} />
                     </div>
                     <div className="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
 
