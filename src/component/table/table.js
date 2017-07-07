@@ -14,7 +14,14 @@ class Table extends Component {
     }
 
     handleDownload(file) {
+        console.log("handleDownload")
         console.log(file.item.path);
+        const BASEURL = "http://localhost:9000/download?dir=";
+        // Fitxategia karpeta bada, zuhaitza eguneratu edo ez egin ezer
+        if ( file.item.type === "file") {
+            // window.open(BASEURL + file.item.path);
+            window.location.href =BASEURL + file.item.path;
+        }
     }
 
     updateTable(srv) {
@@ -71,7 +78,7 @@ class Table extends Component {
                         return (
                             <tr key={i} >
                                 <td>
-                                    <a href={BASEURL+item.path}>
+                                    <a onClick={() => this.handleDownload({item})}>
                                         <i className={item.type==="directory" ? "fa fa-folder" : "fa fa-file-text" } style={{marginRight: '5px'}} />
                                         {item.name}
                                     </a>
