@@ -15,18 +15,6 @@ class Table extends Component {
 
     handleDownload(file) {
         console.log(file.item.path);
-        const filename = file.item.path;
-        // fake server request, getting the file url as response
-        setTimeout(() => {
-            const response = {
-                file: filename,
-            };
-            // server sent the url to the file!
-            // now, let's download:
-            // window.location.href = response.filename;
-            // you could also do:
-            window.open(response.file);
-        }, 100);
     }
 
     updateTable(srv) {
@@ -58,6 +46,7 @@ class Table extends Component {
 
     render() {
         const nirefs = this.state.myfs.children;
+        const BASEURL = "http://localhost:9000/download?dir=";
         if (nirefs === undefined) {
             return (
                 <h5>No data.</h5>
@@ -82,7 +71,7 @@ class Table extends Component {
                         return (
                             <tr key={i} >
                                 <td>
-                                    <a onClick={() => this.handleDownload({item})}>
+                                    <a href={BASEURL+item.path}>
                                         <i className={item.type==="directory" ? "fa fa-folder" : "fa fa-file-text" } style={{marginRight: '5px'}} />
                                         {item.name}
                                     </a>
