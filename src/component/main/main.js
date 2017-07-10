@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import Server from "../servers/server";
 import Sidebar from "../sidebar/sidebar";
 import Table from "../table/table";
+import { FormControl, ControlLabel } from 'react-bootstrap';
 
 class Main extends Component {
     constructor(props) {
@@ -56,7 +57,26 @@ class Main extends Component {
                     </div>
                     <div className="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
 
-                        <h4 className="sub-header">Path: {this.state.selectedFs}</h4>
+                        <div className="row">
+                            <div className="col-md-6">
+                                <ControlLabel>Path: </ControlLabel>
+                                <FormControl
+                                    readOnly
+                                    type="text"
+                                    value={this.state.selectedFs}
+                                />
+                            </div>
+                            <div className="col-md-6">
+                                <ControlLabel>Spanshoot: </ControlLabel>
+                                <FormControl componentClass="select" placeholder="Type">
+                                    <option value="1">1</option>
+                                    <option value="2">2</option>
+                                    <option value="3">3</option>
+                                    <option value="4">4</option>
+                                </FormControl>
+                            </div>
+                        </div>
+                        <div className="row">&nbsp;</div>
 
                         <div className="table-responsive">
                             <Table selectedFs={this.state.selectedFs} />
