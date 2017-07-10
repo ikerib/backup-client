@@ -16,7 +16,7 @@ decorators.Header = ({style, node}) => {
             </div>
         </div>
     );
-}
+};
 
 class Sidebar extends Component {
     constructor(props) {

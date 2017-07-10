@@ -8,7 +8,8 @@ class Table extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            myfs: []
+            myfs: [],
+            snapshoots: [],
         };
         this.handleDownload = this.handleDownload.bind(this);
     }
@@ -38,6 +39,20 @@ class Table extends Component {
             });
     }
 
+    updateSnapshoots(srv) {
+        let url = null;
+        if ( srv === null) {
+            return;
+        } else {
+            url = 'http://localhost:9000/lsSnapshoot?dir=' + srv;
+        }
+        axios.get(url)
+            .then(res => {
+                console.log(res);
+                console.log(res.data);
+            });
+    }
+
     componentDidMount() {
         this.updateTable(this.props.selectedFs);
     }
@@ -45,8 +60,8 @@ class Table extends Component {
     componentWillReceiveProps(nextProps) {
         if(JSON.stringify(this.props.selectedFs) !== JSON.stringify(nextProps.selectedFs)) // Check if it's a new user, you can also use some unique, like the ID
         {
-            console.log("path aldatu da!!");
             this.updateTable(nextProps.selectedFs);
+            this.updateSnapshoots(nextProps.selectedFs);
         }
     }
 

@@ -12,10 +12,10 @@ class Main extends Component {
             selectedFs: null,
         };
         this.handleFsChange = this.handleFsChange.bind(this);
-        Main.handleServerChange = Main.handleServerChange.bind(this);
+        this.handleServerChange = this.handleServerChange.bind(this);
     }
 
-    static handleServerChange(srv) {
+    handleServerChange(srv) {
         if ((srv!==null) && (srv!==undefined)) {
             this.setState({server: srv.item});
         }
@@ -44,7 +44,7 @@ class Main extends Component {
                     </div>
                     <div id="navbar" className="navbar-collapse collapse">
                         <ul className="nav navbar-nav navbar-right">
-                            <Server onServerChange={Main.handleServerChange} />
+                            <Server onServerChange={this.handleServerChange} />
                         </ul>
                     </div>
                 </div>
