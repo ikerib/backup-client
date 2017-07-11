@@ -31,17 +31,31 @@ class Main extends Component {
             console.log(url);
             axios.get(url)
                 .then(res => {
-                    const response = res.data.map(obj => obj);
+                    let response =null;
+                    if ((res.data!==null) && (res.data!==undefined)) {
+                        console.log(res.data);
+                        console.log("ZER DUGUUUUUUUUUUUUUUUUUU");
+                        response = res.data.map(obj => obj);
+                    } else {
+                        response = [];
+                    }
                     console.log("response:");
                     console.log(response);
                     this.setState({ snapshoots:response });
                     console.log("state snapshoots");
                     console.log(this.state.snapshoots);
+                })
+                .catch(function (error) {
+                    console.log("Ez dago snapshoot-ik");
                 });
+            ;
         }
     }
 
     render() {
+        if (!this.state.snapshoots) {
+            this.setState({snapshoots:[]});
+        }
         return (
             <body>
 
@@ -84,11 +98,10 @@ class Main extends Component {
                             <div className="col-md-6">
                                 <ControlLabel>Spanshoot: </ControlLabel>
                                 <FormControl componentClass="select" placeholder="Type">
+                                    <option key="-1" value="Aukeratu bat" selected={true}>Aukeratu bat</option>
                                     {
                                         this.state.snapshoots.map((option, index) => {
-                                            console.log(index);
-                                            console.log(option);
-                                            return (<option key={index} value={option}>{option}</option>)
+                                            return (<option key={index} data-dir={option.dir} value={option.fs}>{option.dt}</option>)
                                         })
                                     }
                                 </FormControl>
