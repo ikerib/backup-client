@@ -75,7 +75,7 @@ class Sidebar extends Component {
     render() {
         return (
             <div>
-                <Treebeard data={this.state.myfs} onToggle={this.onToggle} style={styles} />
+                <Treebeard ref="nireTree" data={this.state.myfs} onToggle={this.onToggle} style={styles} />
             </div>
 
         );

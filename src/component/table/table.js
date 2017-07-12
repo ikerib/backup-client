@@ -15,13 +15,13 @@ class Table extends Component {
     }
 
     handleDownload(file) {
-        console.log("handleDownload")
-        console.log(file.item.path);
-        const BASEURL = "http://localhost:9000/download?dir=";
         // Fitxategia karpeta bada, zuhaitza eguneratu edo ez egin ezer
         if ( file.item.type === "file") {
+            const BASEURL = "http://localhost:9000/download?dir=";
             // window.open(BASEURL + file.item.path);
             window.location.href =BASEURL + file.item.path;
+        } else {
+            this.props.onFolderClick(file.item.path);
         }
     }
 

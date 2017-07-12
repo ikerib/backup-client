@@ -12,6 +12,7 @@ class Server extends Component {
 
         this.state = {
             response: [],
+            server: null
         };
         this.handleClick = this.handleClick.bind(this);
     }
@@ -26,6 +27,7 @@ class Server extends Component {
     }
 
     handleClick(srv) {
+        this.state.server = srv.item;
         this.props.onServerChange(srv);
     }
 
@@ -33,12 +35,13 @@ class Server extends Component {
         if (!this.state.response) {
             return <div>Loading</div>;
         }
+
         return (
             <ul className="nav navbar-nav navbar-right">
-
                 {
                     this.state.response.map((item, i) => {
-                        return (<li key={i} ><a data-id={item} onClick={() => this.handleClick({item})}>{item}</a></li>);
+                        let className = this.state.server===item ? 'active' : 'inactive';
+                        return (<li key={i} data-id={this.state.server + "-" + item} className={className}><a data-id={item} onClick={() => this.handleClick({item})}>{item}</a></li>);
                     })
                 }
             </ul>

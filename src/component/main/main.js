@@ -8,13 +8,22 @@ const axios = require('axios');
 class Main extends Component {
     constructor(props) {
         super(props);
-        this.state = {
-            server: null,
-            selectedFs: null,
-            snapshoots:[],
-        };
+        this.state = {server: null,selectedFs: null,snapshoots:[],};
         this.handleFsChange = this.handleFsChange.bind(this);
         this.handleServerChange = this.handleServerChange.bind(this);
+        this.handleFolderClik = this.handleFolderClik.bind(this);
+    }
+
+    handleFolderClik(path) {
+        const url = 'http://localhost:9000/lsdir?dir=' + path;
+        axios.get(url)
+            .then(res => {
+                const myfs = res.data;
+                myfs.active = true;
+                myfs.toggled = false;
+                // this.refs.child.setState({ cursor:myfs });
+                this.refs.child.onToggle(myfs, false);
+            });
     }
 
     handleServerChange(srv) {
@@ -27,23 +36,15 @@ class Main extends Component {
         if ((path!==null) && (path!==undefined)) {
             this.setState({selectedFs: path});
             const url = 'http://localhost:9000/lssnapshoot?dir='+path;
-            console.log("URL: ");
-            console.log(url);
             axios.get(url)
                 .then(res => {
                     let response =null;
                     if ((res.data!==null) && (res.data!==undefined)) {
-                        console.log(res.data);
-                        console.log("ZER DUGUUUUUUUUUUUUUUUUUU");
                         response = res.data.map(obj => obj);
                     } else {
                         response = [];
                     }
-                    console.log("response:");
-                    console.log(response);
                     this.setState({ snapshoots:response });
-                    console.log("state snapshoots");
-                    console.log(this.state.snapshoots);
                 })
                 .catch(function (error) {
                     console.log("Ez dago snapshoot-ik");
@@ -73,7 +74,7 @@ class Main extends Component {
                     </div>
                     <div id="navbar" className="navbar-collapse collapse">
                         <ul className="nav navbar-nav navbar-right">
-                            <Server onServerChange={this.handleServerChange} />
+                            <Server server={this.state.server} onServerChange={this.handleServerChange} />
                         </ul>
                     </div>
                 </div>
@@ -82,7 +83,7 @@ class Main extends Component {
             <div className="container-fluid">
                 <div className="row">
                     <div className="col-sm-3 col-md-2 sidebar">
-                        <Sidebar server={this.state.server} selectedFs={this.state.selectedFs} onFsChange={this.handleFsChange} />
+                        <Sidebar ref="child" server={this.state.server} selectedFs={this.state.selectedFs} onFsChange={this.handleFsChange} />
                     </div>
                     <div className="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
 
@@ -110,7 +111,7 @@ class Main extends Component {
                         <div className="row">&nbsp;</div>
 
                         <div className="table-responsive">
-                            <Table selectedFs={this.state.selectedFs} />
+                            <Table selectedFs={this.state.selectedFs} onFolderClick={this.handleFolderClik} />
                         </div>
                     </div>
                 </div>
