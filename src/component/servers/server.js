@@ -1,7 +1,7 @@
 /**
  * Created by iibarguren on 6/29/17.
  */
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 import './server.css';
 
 const axios = require('axios');
@@ -22,7 +22,7 @@ class Server extends Component {
         axios.get(url)
             .then(res => {
                 const response = res.data.map(obj => obj);
-                this.setState({ response });
+                this.setState({response});
             });
     }
 
@@ -37,11 +37,15 @@ class Server extends Component {
         }
 
         return (
-            <ul className="nav navbar-nav navbar-right">
+            <ul className="nav navbar-nav navbar-right">ª
                 {
                     this.state.response.map((item, i) => {
-                        let className = this.state.server===item ? 'active' : 'inactive';
-                        return (<li key={i} data-id={this.state.server + "-" + item} className={className}><a data-id={item} onClick={() => this.handleClick({item})}>{item}</a></li>);
+                        let className = this.state.server === item ? 'active' : 'inactive';
+                        return (
+                            <li key={i} className={className}>
+                                <a href="javascript:void(0)" data-id={item} onClick={() => this.handleClick({item})}>{item}</a>
+                            </li>
+                        );
                     })
                 }
             </ul>

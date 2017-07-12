@@ -21,6 +21,8 @@ class Table extends Component {
             // window.open(BASEURL + file.item.path);
             window.location.href =BASEURL + file.item.path;
         } else {
+            console.log("karpetan click click click");
+            console.log(file);
             this.props.onFolderClick(file.item.path);
         }
     }
@@ -68,6 +70,51 @@ class Table extends Component {
 
     render() {
         const nirefs = this.state.myfs.children;
+        let newdir = "";
+        if ( (this.props.selectedFs !== undefined) && (this.props.selectedFs !== null)) {
+            // newdir = this.props.selectedFs.split("/").pop();
+            const s = this.props.selectedFs;
+            newdir = s.substring(0, s.lastIndexOf('/'));
+
+            console.log("newdir newdir newdir");
+            console.log(newdir);
+        }
+
+        console.log("NIREFS NIREFS NIREFS");
+        console.log(nirefs);
+        console.log("NIREFS2 NIREFS2 NIREFS2");
+        if ( nirefs !== undefined) {
+            if ( nirefs[0].name === "..") {
+
+                nirefs[0]={
+                    path: newdir,
+                    name: "..",
+                    children: [],
+                    size: 0,
+                    atime: "2017-07-12T11:03:07.580Z",
+                    mtime: "2011-07-12T12:02:38.000Z",
+                    ctime: "2017-06-28T05:59:59.563Z",
+                    birthtime: "2017-06-28T05:59:59.563Z",
+                    mode: "0770",
+                    type: "directory"
+                };
+            } else {
+                nirefs.unshift({
+                    path: newdir,
+                    name: "..",
+                    children: [],
+                    size: 0,
+                    atime: "2017-07-12T11:03:07.580Z",
+                    mtime: "2011-07-12T12:02:38.000Z",
+                    ctime: "2017-06-28T05:59:59.563Z",
+                    birthtime: "2017-06-28T05:59:59.563Z",
+                    mode: "0770",
+                    type: "directory"
+                });
+            }
+
+        }
+
         const BASEURL = "http://localhost:9000/download?dir=";
         if (nirefs === undefined) {
             return (
@@ -93,7 +140,7 @@ class Table extends Component {
                         return (
                             <tr key={i} >
                                 <td>
-                                    <a onClick={() => this.handleDownload({item})}>
+                                    <a href="javascript:void(0)" onClick={() => this.handleDownload({item})}>
                                         <i className={item.type==="directory" ? "fa fa-folder" : "fa fa-file-text" } style={{marginRight: '5px'}} />
                                         {item.name}
                                     </a>
