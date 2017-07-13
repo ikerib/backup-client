@@ -39,7 +39,6 @@ class Sidebar extends Component {
         } else {
             url = config.API_URL + 'lsdir?dir=/mnt/nfs/' + srv;
         }
-
         this.setState({loading: true});
         axios.get(url)
             .then(res => {
@@ -47,6 +46,9 @@ class Sidebar extends Component {
                 this.setState({loading: false});
                 this.setState({ myfs });
                 this.setState({selectedFs: srv});
+                if (this.state.myfs !== []) {
+                    this.onToggle(this.state.myfs, true);
+                }
             }).catch(error => {
                 console.log(error);
             });
@@ -64,6 +66,9 @@ class Sidebar extends Component {
     }
 
     onToggle(node, toggled) {
+        console.log("OnToggle ini");
+        console.log(node);
+        console.log("OnToggle fin");
         if (this.state.cursor) {
             this.setState({cursor: {active: false}});
             // this.state.cursor.active = false;
