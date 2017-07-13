@@ -2,12 +2,13 @@ import React, {Component} from 'react';
 import Moment from 'moment';
 
 const axios = require('axios');
-
+const config = require('../../config');
 
 class Table extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            loading: true,
             myfs: [],
             snapshoots: [],
         };
@@ -17,7 +18,7 @@ class Table extends Component {
     handleDownload(file) {
         // Fitxategia karpeta bada, zuhaitza eguneratu edo ez egin ezer
         if ( file.item.type === "file") {
-            const BASEURL = "http://localhost:9000/download?dir=";
+            const BASEURL = config.API_URL + "download?dir=";
             // window.open(BASEURL + file.item.path);
             window.location.href =BASEURL + file.item.path;
         } else {
@@ -30,9 +31,9 @@ class Table extends Component {
     updateTable(srv) {
         let url = null;
         if ( srv === null) {
-            url = 'http://localhost:9000/ls?dir=/tmp/'
+            url = config.API_URL + 'ls?dir=/tmp/'
         } else {
-            url = 'http://localhost:9000/ls?dir=' + srv;
+            url = config.API_URL + 'ls?dir=' + srv;
         }
         axios.get(url)
             .then(res => {
@@ -46,7 +47,7 @@ class Table extends Component {
         if ( srv === null) {
             return;
         } else {
-            url = 'http://localhost:9000/lsSnapshoot?dir=' + srv;
+            url = config.API_URL + 'lsSnapshoot?dir=' + srv;
         }
         axios.get(url)
             .then(res => {
@@ -67,7 +68,6 @@ class Table extends Component {
         }
     }
 
-
     render() {
         const nirefs = this.state.myfs.children;
         let newdir = "";
@@ -75,14 +75,8 @@ class Table extends Component {
             // newdir = this.props.selectedFs.split("/").pop();
             const s = this.props.selectedFs;
             newdir = s.substring(0, s.lastIndexOf('/'));
-
-            console.log("newdir newdir newdir");
-            console.log(newdir);
         }
 
-        console.log("NIREFS NIREFS NIREFS");
-        console.log(nirefs);
-        console.log("NIREFS2 NIREFS2 NIREFS2");
         if ( nirefs !== undefined) {
             if ( nirefs[0].name === "..") {
 
@@ -115,10 +109,9 @@ class Table extends Component {
 
         }
 
-        const BASEURL = "http://localhost:9000/download?dir=";
         if (nirefs === undefined) {
             return (
-                <h5>No data.</h5>
+                <h5>Ez dago daturik.</h5>
             )
         }
         return (

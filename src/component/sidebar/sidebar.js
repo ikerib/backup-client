@@ -23,6 +23,7 @@ class Sidebar extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            loading: true,
             cursor: {path:"/mnt/nfs/Aplik/.zfs/snapshot/"},
             selectedFs: this.props.selectedFs,
             server: this.props.server,
@@ -39,10 +40,15 @@ class Sidebar extends Component {
             url = config.API_URL + 'lsdir?dir=/mnt/nfs/' + srv;
         }
 
+        this.setState({loading: true});
         axios.get(url)
             .then(res => {
                 const myfs = res.data;
+                this.setState({loading: false});
                 this.setState({ myfs });
+                this.setState({selectedFs: srv});
+            }).catch(error => {
+                console.log(error);
             });
     }
 
@@ -73,13 +79,24 @@ class Sidebar extends Component {
 
     }
 
-    render() {
+    render () {
+        let content;
+
+        if (this.state.loading) {
+            content = <div>Datuak eskuratzen...</div>;
+        } else {
+            return(
+                <div>
+                    <Treebeard ref="nireTree" data={this.state.myfs} onToggle={this.onToggle} style={styles} />
+                </div>
+            );
+        }
+
         return (
             <div>
-                <Treebeard ref="nireTree" data={this.state.myfs} onToggle={this.onToggle} style={styles} />
+                {content}
             </div>
-
-        );
+        )
     }
 }
 
