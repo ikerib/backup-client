@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import styles from './styles';
 import {Treebeard, decorators} from 'react-treebeard';
 const axios = require('axios');
+const config = require('../../config');
 
 decorators.Header = ({style, node}) => {
     const iconType = node.children ? 'folder' : 'file-text';
@@ -33,9 +34,9 @@ class Sidebar extends Component {
     updateTree(srv) {
         let url = null;
         if ( srv === null) {
-            url = 'http://localhost:9000/lsdir?dir=/tmp/'
+            url = config.API_URL + 'lsdir?dir=/tmp/'
         } else {
-            url = 'http://localhost:9000/lsdir?dir=/mnt/nfs/' + srv;
+            url = config.API_URL + 'lsdir?dir=/mnt/nfs/' + srv;
         }
 
         axios.get(url)

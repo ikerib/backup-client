@@ -3,7 +3,7 @@
  */
 import React, {Component} from 'react';
 import './server.css';
-
+const config = require('../../config');
 const axios = require('axios');
 
 class Server extends Component {
@@ -18,7 +18,7 @@ class Server extends Component {
     }
 
     componentDidMount() {
-        const url = 'http://localhost:9000/servers';
+        const url = config.API_URL + 'servers';
         axios.get(url)
             .then(res => {
                 const response = res.data.map(obj => obj);
@@ -43,7 +43,8 @@ class Server extends Component {
                         let className = this.state.server === item ? 'active' : 'inactive';
                         return (
                             <li key={i} className={className}>
-                                <a href="javascript:void(0)" data-id={item} onClick={() => this.handleClick({item})}>{item}</a>
+                                <a href="javascript:void(0)" data-id={item}
+                                   onClick={() => this.handleClick({item})}>{item}</a>
                             </li>
                         );
                     })

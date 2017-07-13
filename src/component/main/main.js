@@ -4,6 +4,7 @@ import Sidebar from "../sidebar/sidebar";
 import Table from "../table/table";
 import { FormControl, ControlLabel } from 'react-bootstrap';
 const axios = require('axios');
+const config = require('../../config');
 
 class Main extends Component {
     constructor(props) {
@@ -15,7 +16,7 @@ class Main extends Component {
     }
 
     handleFolderClik(path) {
-        const url = 'http://localhost:9000/lsdir?dir=' + path;
+        const url = config.API_URL + 'lsdir?dir=' + path;
         axios.get(url)
             .then(res => {
                 const myfs = res.data;
@@ -35,7 +36,7 @@ class Main extends Component {
     handleFsChange(path) {
         if ((path!==null) && (path!==undefined)) {
             this.setState({selectedFs: path});
-            const url = 'http://localhost:9000/lssnapshoot?dir='+path;
+            const url = config.API_URL + 'lssnapshoot?dir='+path;
             axios.get(url)
                 .then(res => {
                     let response =null;
