@@ -36,6 +36,7 @@ class Main extends Component {
 
     handleServerChange(srv) {
         this.setState({erroreTextua: ""});
+        this.setState({snapshoots: []});
         if ((srv !== null) && (srv !== undefined)) {
             this.setState({server: srv.item});
         }
@@ -67,6 +68,33 @@ class Main extends Component {
         if (!this.state.snapshoots) {
             this.setState({snapshoots: []});
         }
+        let divCombo;
+
+        if (this.state.snapshoots && this.state.snapshoots.length > 0) {
+            divCombo = (
+                <div className="col-md-6">
+                    <ControlLabel>Spanshoot: </ControlLabel>
+                    <FormControl componentClass="select" placeholder="Type">
+                        <option key="-1" value="Aukeratu bat" selected={true}>Aukeratu
+                            bat
+                        </option>
+                        {
+                            this.state.snapshoots.map((option, index) => {
+                                return (<option key={index} data-dir={option.dir}
+                                                value={option.fs}>{option.dt}</option>)
+                            })
+                        }
+                    </FormControl>
+                </div>
+            );
+        } else {
+            divCombo = (
+                <div className="col-md-6">
+
+                </div>
+            );
+        }
+
         return (
             <body>
 
@@ -116,20 +144,7 @@ class Main extends Component {
                                     value={this.state.selectedFs}
                                 />
                             </div>
-                            <div className="col-md-6">
-                                <ControlLabel>Spanshoot: </ControlLabel>
-                                <FormControl componentClass="select" placeholder="Type">
-                                    <option key="-1" value="Aukeratu bat" selected={true}>Aukeratu
-                                        bat
-                                    </option>
-                                    {
-                                        this.state.snapshoots.map((option, index) => {
-                                            return (<option key={index} data-dir={option.dir}
-                                                            value={option.fs}>{option.dt}</option>)
-                                        })
-                                    }
-                                </FormControl>
-                            </div>
+                            { divCombo }
                         </div>
                         <div className="row">&nbsp;</div>
 
