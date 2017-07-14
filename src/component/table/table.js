@@ -117,6 +117,7 @@ class Table extends Component {
 
     render() {
         let content;
+
         if (this.state.loading) {
             return (
                 <div>Datuak eskuratzen...</div>

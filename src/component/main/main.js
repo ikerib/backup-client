@@ -10,7 +10,12 @@ const config = require('../../config');
 class Main extends Component {
     constructor(props) {
         super(props);
-        this.state = {server: null, selectedFs: null, snapshoots: [], erroreTextua: ""};
+        this.state = {
+            server: null,
+            selectedFs: null,
+            snapshoots: [],
+            erroreTextua: ""
+        };
         this.handleFsChange = this.handleFsChange.bind(this);
         this.handleServerChange = this.handleServerChange.bind(this);
         this.handleFolderClik = this.handleFolderClik.bind(this);
@@ -39,6 +44,7 @@ class Main extends Component {
         this.setState({snapshoots: []});
         if ((srv !== null) && (srv !== undefined)) {
             this.setState({server: srv.item});
+            this.setState({selectedFs: null});
         }
     }
 
