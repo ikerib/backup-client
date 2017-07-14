@@ -34,10 +34,11 @@ class Sidebar extends Component {
 
     updateTree(srv) {
         let url = null;
+        let that = this;
         if ( srv === null) {
-            url = config.API_URL + 'lsdir?dir=/tmp/'
+            url = config.API_URL + 'lsdir?dir=' + config.MOUNT_POINT;
         } else {
-            url = config.API_URL + 'lsdir?dir=/mnt/nfs/' + srv;
+            url = config.API_URL + 'lsdir?dir='+ config.MOUNT_POINT + srv;
         }
         this.setState({loading: true});
         axios.get(url)
@@ -45,11 +46,12 @@ class Sidebar extends Component {
                 const myfs = res.data;
                 this.setState({loading: false});
                 this.setState({ myfs });
-                this.setState({selectedFs: srv});
+                this.setState({selectedFs: config.MOUNT_POINT + srv});
                 if (this.state.myfs !== []) {
                     this.onToggle(this.state.myfs, true);
                 }
             }).catch(error => {
+                that.props.onError("Akats bat egonda zuhaitza eratzerakoan. Baliteke karpeta guztiak ez azaltzea");
                 console.log(error);
             });
     }
@@ -66,12 +68,8 @@ class Sidebar extends Component {
     }
 
     onToggle(node, toggled) {
-        console.log("OnToggle ini");
-        console.log(node);
-        console.log("OnToggle fin");
         if (this.state.cursor) {
             this.setState({cursor: {active: false}});
-            // this.state.cursor.active = false;
         }
         node.active = true;
         if (node.children) {
