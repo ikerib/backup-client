@@ -20,6 +20,7 @@ class Main extends Component {
         this.handleServerChange = this.handleServerChange.bind(this);
         this.handleFolderClik = this.handleFolderClik.bind(this);
         this.handleError = this.handleError.bind(this);
+        this.handleSelect = this.handleSelect.bind(this);
     }
 
     handleError(text) {
@@ -70,6 +71,14 @@ class Main extends Component {
         }
     }
 
+    handleSelect(option) {
+        let selectedPath = option.target.value;
+        let selectedData = option.target[option.target.selectedIndex].getAttribute('data-dir')
+        let selectedCompletePath = selectedData + "/.zfs/snapshot/" + selectedPath;
+
+        this.setState({selectedFs: selectedCompletePath})
+    }
+
     render() {
         if (!this.state.snapshoots) {
             this.setState({snapshoots: []});
@@ -80,10 +89,8 @@ class Main extends Component {
             divCombo = (
                 <div className="col-md-6">
                     <ControlLabel>Spanshoot: </ControlLabel>
-                    <FormControl componentClass="select" placeholder="Type">
-                        <option key="-1" value="Aukeratu bat" selected={true}>Aukeratu
-                            bat
-                        </option>
+                    <FormControl componentClass="select" placeholder="Type" onChange={this.handleSelect.bind(this)}>
+                        <option key="-1" value="Aukeratu bat" selected={true}>Aukeratu bat</option>
                         {
                             this.state.snapshoots.map((option, index) => {
                                 return (<option key={index} data-dir={option.dir}

@@ -4,10 +4,6 @@
 import React, {Component} from 'react';
 
 class Errorea extends Component {
-    constructor(props, context) {
-        super(props, context);
-    }
-
 
     render() {
         return (

@@ -27,7 +27,7 @@ class Server extends Component {
     }
 
     handleClick(srv) {
-        this.state.server = srv.item;
+        this.setState({server: srv.item});
         this.props.onServerChange(srv);
     }
 

@@ -116,7 +116,6 @@ class Table extends Component {
     }
 
     render() {
-        let content;
 
         if (this.state.loading) {
             return (
@@ -131,7 +130,6 @@ class Table extends Component {
                 newdir = s.substring(0, s.lastIndexOf('/'));
             }
 
-            let resp="";
             if ( nirefs !== undefined){
                 if (nirefs.length > 0) {
                     if ( nirefs[0].name === "..") {
