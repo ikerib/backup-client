@@ -122,7 +122,7 @@ class Main extends Component {
                             <span className="icon-bar"/>
                             <span className="icon-bar"/>
                         </button>
-                        <a className="navbar-brand">Project name</a>
+                        <a className="navbar-brand">Backup Kudeatzailea</a>
                     </div>
                     <div id="navbar" className="navbar-collapse collapse">
                         <ul className="nav navbar-nav navbar-right">
