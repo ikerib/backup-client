@@ -16,25 +16,24 @@ class Table extends Component {
     }
 
     handleDownload(file) {
+        console.log("Table - handleDownload");
         // Fitxategia karpeta bada, zuhaitza eguneratu edo ez egin ezer
         if ( file.item.type === "file") {
             const BASEURL = config.API_URL + "download?dir=";
-            // window.open(BASEURL + file.item.path);
             window.location.href =BASEURL + file.item.path;
         } else {
-            console.log("karpetan click click click");
-            console.log(file);
-            this.props.onFolderClick(file.item.path);
+            this.props.onFolderClick(file.item.path+"/"+file.item.name);
         }
     }
 
     updateTable(srv) {
+        console.log("Table - updateTable");
         this.setState({loading: true});
         let url = null;
         if ( srv === null) {
-            url = config.API_URL + 'ls?dir=' + config.MOUNT_POINT;
+            url = config.API_URL + 'dirlist?dir=' + config.MOUNT_POINT;
         } else {
-            url = config.API_URL + 'ls?dir=' + srv;
+            url = config.API_URL + 'dirlist?dir=' + srv;
         }
         let that = this;
         axios.get(url)
@@ -44,7 +43,7 @@ class Table extends Component {
                 this.setState({loading: false});
             })
             .catch(function (error) {
-                this.setState({loading: false});
+                that.setState({loading: false});
                 if (error.response) {
                     // The request was made and the server responded with a status code
                     // that falls out of the range of 2xx
@@ -68,6 +67,7 @@ class Table extends Component {
     }
 
     updateSnapshoots(srv) {
+        console.log("Table - updateSnapshoots");
         let url = null;
         let that = this;
         if ( srv === null) {
@@ -77,6 +77,7 @@ class Table extends Component {
         }
         axios.get(url)
             .then(res => {
+                console.log(res);
                 // TODO: Zuhaitza + Taula birkargatu snapshoot relative izateko
                 console.log("TODO: Zuhaitza + Taula birkargatu snapshoot relative izateko");
             }).catch(function (error) {
@@ -104,10 +105,14 @@ class Table extends Component {
     }
 
     componentDidMount() {
+        console.log("Table - componentDidMount");
         this.updateTable(this.props.selectedFs);
     }
 
     componentWillReceiveProps(nextProps) {
+        console.log("Table - componentWillReceiveProps22");
+        console.log(this.props.selectedFs);
+        console.log(nextProps.selectedFs);
         if(JSON.stringify(this.props.selectedFs) !== JSON.stringify(nextProps.selectedFs)) // Check if it's a new user, you can also use some unique, like the ID
         {
             this.updateTable(nextProps.selectedFs);

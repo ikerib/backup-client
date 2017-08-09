@@ -28,28 +28,36 @@ class Main extends Component {
     }
 
     handleFolderClik(path) {
+        console.log("Main - handleFolderClik");
+        console.log("Main - path: " + path);
         this.setState({erroreTextua: ""});
-        const url = config.API_URL + 'lsdir?dir=' + path;
-        axios.get(url)
-            .then(res => {
-                const myfs = res.data;
-                myfs.active = true;
-                myfs.toggled = false;
-                // this.refs.child.setState({ cursor:myfs });
-                this.refs.child.onToggle(myfs, false);
-            });
+        this.setState({selectedFs: path});
+        this.handleFsChange(path);
+        // const url = config.API_URL + 'lsdir?dir=' + path;
+        // axios.get(url)
+        //     .then(res => {
+        //         const myfs = res.data;
+        //            myfs.active = true;
+        //            myfs.toggled = false;
+        //         // this.refs.child.setState({ cursor:myfs });
+        //         // this.refs.child.onToggle(myfs, false);
+        //         this.handleFsChange(myfs.node);
+        //     });
     }
 
     handleServerChange(srv) {
+        console.log("Main - handleServerChange");
         this.setState({erroreTextua: ""});
         this.setState({snapshoots: []});
         if ((srv !== null) && (srv !== undefined)) {
             this.setState({server: srv.item});
-            this.setState({selectedFs: null});
+            // this.setState({selectedFs: null});
+            this.setState({selectedFs: config.MOUNT_POINT + srv.item});
         }
     }
 
     handleFsChange(path) {
+        console.log("Main - handleFsChange");
         this.setState({erroreTextua: ""});
         if ((path !== null) && (path !== undefined)) {
             this.setState({selectedFs: path});
@@ -72,6 +80,7 @@ class Main extends Component {
     }
 
     handleSelect(option) {
+        console.log("Main - handleSelect");
         let selectedPath = option.target.value;
         let selectedData = option.target[option.target.selectedIndex].getAttribute('data-dir')
         let selectedCompletePath = selectedData + "/.zfs/snapshot/" + selectedPath;
@@ -87,7 +96,7 @@ class Main extends Component {
 
         if (this.state.snapshoots && this.state.snapshoots.length > 0) {
             divCombo = (
-                <div className="col-md-6">
+                <div className="col-md-3">
                     <ControlLabel>Spanshoot: </ControlLabel>
                     <FormControl componentClass="select" placeholder="Type" onChange={this.handleSelect.bind(this)}>
                         <option key="-1" value="Aukeratu bat" selected={true}>Aukeratu bat</option>
@@ -102,7 +111,7 @@ class Main extends Component {
             );
         } else {
             divCombo = (
-                <div className="col-md-6">
+                <div className="col-md-3">
 
                 </div>
             );
@@ -136,20 +145,17 @@ class Main extends Component {
 
             <div className="container-fluid">
                 <div className="row">
-                    <div className="col-sm-3 col-md-2 sidebar">
-                        <Sidebar ref="child" server={this.state.server}
-                                 selectedFs={this.state.selectedFs}
-                                 onFsChange={this.handleFsChange}
-                                 onError={this.handleError}/>
-                    </div>
-                    <div className="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+                    {/*<div className="col-sm-3 col-md-2 sidebar">*/}
+                    {/*</div>*/}
+                    {/*<div className="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">*/}
+                    <div className="col-sm-12 col-md-12  main">
 
                         {
                             this.state.erroreTextua.length > 0 ? <Errorea erroreTextua={this.state.erroreTextua}/> : null
                         }
 
                         <div className="row">
-                            <div className="col-md-6">
+                            <div className="col-md-9">
                                 <ControlLabel>Path: </ControlLabel>
                                 <FormControl
                                     readOnly

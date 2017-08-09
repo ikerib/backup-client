@@ -33,6 +33,7 @@ class Sidebar extends Component {
     }
 
     updateTree(srv) {
+        console.log("Sidebar - updateTree");
         let url = null;
         let that = this;
         if ( srv === null) {
@@ -48,7 +49,7 @@ class Sidebar extends Component {
                 this.setState({ myfs });
                 this.setState({selectedFs: config.MOUNT_POINT + srv});
                 if (this.state.myfs !== []) {
-                    this.onToggle(this.state.myfs, true);
+                    // this.onToggle(this.state.myfs, true);
                 }
             }).catch(error => {
                 that.props.onError("Akats bat egonda zuhaitza eratzerakoan. Baliteke karpeta guztiak ez azaltzea");
@@ -57,10 +58,12 @@ class Sidebar extends Component {
     }
 
     componentDidMount() {
+        console.log("Sidebar - componentDidMount");
         this.updateTree(null);
     }
 
     componentWillReceiveProps(nextProps) {
+        console.log("Sidebar - componentWillReceiveProps1");
         if(JSON.stringify(this.props.server) !== JSON.stringify(nextProps.server)) // Check if it's a new user, you can also use some unique, like the ID
         {
             this.updateTree(nextProps.server);
@@ -68,6 +71,7 @@ class Sidebar extends Component {
     }
 
     onToggle(node, toggled) {
+        console.log("Sidebar - onToggle");
         if (this.state.cursor) {
             this.setState({cursor: {active: false}});
         }
