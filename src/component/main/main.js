@@ -89,12 +89,27 @@ class Main extends Component {
             const subPathIndexOf = aPath[1].indexOf('/');
             if ( subPathIndexOf !== -1 ) {
                 const subPath = aPath[1].substring(subPathIndexOf);
-                console.log(subPath);
                 newDir = aPath[0] + "/.zfs/snapshot/" + selectedPath + subPath;
-                console.log(newDir);
             } else {
                 newDir = selectedCompletePath;
             }
+        } else {
+            // Zailagoa oraindik! PAth base, snapshoot sartu eta zegoen tokian utzi.
+            // Demagun gaudela: /mnt/nfs/Donibane/Grupos/Artxiboa
+            // Lortu behar da : /mnt/nfs/Donibane/Grupos/.zfs/snapshot/auto-20170810.1258-1d/Artxiboa
+            // path horretatik, lehen 4 karpetak izango dira, basea eta ondorengoa karpetak
+            // BASE => /mnt/nfs/Donibane/Grupos
+            // KARPETA => /Artxiboa
+
+            let indices = [];
+            for(let i=0; i< this.state.selectedFs.length;i++) {
+                if ( this.state.selectedFs[i] === "/") indices.push(i);
+            }
+
+            const KARPETA = this.state.selectedFs.substring(indices[4]);
+            const BASE = this.state.selectedFs.split(KARPETA)[0];
+
+            newDir = BASE + "/.zfs/snapshot/" + selectedPath + KARPETA;
         }
 
         this.setState({selectedFs: newDir})
