@@ -31,7 +31,8 @@ class Table extends Component {
         this.setState({loading: true});
         let url = null;
         if ( srv === null) {
-            url = config.API_URL + 'dirlist?dir=' + config.MOUNT_POINT;
+            url = config.API_URL + 'dirlist?dir=' + config.INIT_PATH;
+            this.props.sele
         } else {
             url = config.API_URL + 'dirlist?dir=' + srv;
         }
@@ -116,7 +117,7 @@ class Table extends Component {
         if(JSON.stringify(this.props.selectedFs) !== JSON.stringify(nextProps.selectedFs)) // Check if it's a new user, you can also use some unique, like the ID
         {
             this.updateTable(nextProps.selectedFs);
-            this.updateSnapshoots(nextProps.selectedFs);
+            // this.updateSnapshoots(nextProps.selectedFs);
         }
     }
 

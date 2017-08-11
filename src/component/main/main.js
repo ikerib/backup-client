@@ -12,14 +12,14 @@ class Main extends Component {
         super(props);
         this.state = {
             server: null,
-            selectedFs: null,
+            selectedFs: config.INIT_PATH,
             snapshoots: [],
             erroreTextua: ""
         };
-        this.handleFsChange = this.handleFsChange.bind(this);
-        this.handleServerChange = this.handleServerChange.bind(this);
-        this.handleFolderClik = this.handleFolderClik.bind(this);
         this.handleError = this.handleError.bind(this);
+        this.handleFolderClik = this.handleFolderClik.bind(this);
+        this.handleServerChange = this.handleServerChange.bind(this);
+        this.handleFsChange = this.handleFsChange.bind(this);
         this.handleSelect = this.handleSelect.bind(this);
     }
 
@@ -33,16 +33,6 @@ class Main extends Component {
         this.setState({erroreTextua: ""});
         this.setState({selectedFs: path});
         this.handleFsChange(path);
-        // const url = config.API_URL + 'lsdir?dir=' + path;
-        // axios.get(url)
-        //     .then(res => {
-        //         const myfs = res.data;
-        //            myfs.active = true;
-        //            myfs.toggled = false;
-        //         // this.refs.child.setState({ cursor:myfs });
-        //         // this.refs.child.onToggle(myfs, false);
-        //         this.handleFsChange(myfs.node);
-        //     });
     }
 
     handleServerChange(srv) {
@@ -51,7 +41,6 @@ class Main extends Component {
         this.setState({snapshoots: []});
         if ((srv !== null) && (srv !== undefined)) {
             this.setState({server: srv.item});
-            // this.setState({selectedFs: null});
             this.setState({selectedFs: config.MOUNT_POINT + srv.item});
         }
     }
@@ -62,6 +51,7 @@ class Main extends Component {
         if ((path !== null) && (path !== undefined)) {
             this.setState({selectedFs: path});
             const url = config.API_URL + 'lssnapshoot?dir=' + path;
+            console.log("Table - HandleFS - Snapshoot");
             axios.get(url)
                 .then(res => {
                     let response = null;
