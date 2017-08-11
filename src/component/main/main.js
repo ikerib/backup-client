@@ -71,11 +71,33 @@ class Main extends Component {
 
     handleSelect(option) {
         console.log("Main - handleSelect");
-        let selectedPath = option.target.value;
-        let selectedData = option.target[option.target.selectedIndex].getAttribute('data-dir');
+        let selectedPath = option.target.value; //auto-20170810.1058-1d/
+        let selectedData = option.target[option.target.selectedIndex].getAttribute('data-dir'); //mnt/nfs/Donibane/Grupos
         let selectedCompletePath = selectedData + "/.zfs/snapshot/" + selectedPath;
 
-        this.setState({selectedFs: selectedCompletePath})
+        let newDir =selectedCompletePath ;
+
+        // 1-. Check snapshoot duen lehendik
+        if ( this.state.selectedFs.indexOf('/.zfs/snapshot/') !== -1 ) {
+            // Demagun: /mnt/nfs/Donibane/Grupos/.zfs/snapshot/auto-20170810.1258-1d/Artxiboa
+            const aPath = this.state.selectedFs.split('/.zfs/snapshot/');
+            // Orain:
+            // aPath[0] => /mnt/nfs/Donibane/Grupos
+            // aPath[1] => auto-20170810.1258-1d
+
+            // 2-. Bilatu azpikarpeta den ala snapshoot raiz
+            const subPathIndexOf = aPath[1].indexOf('/');
+            if ( subPathIndexOf !== -1 ) {
+                const subPath = aPath[1].substring(subPathIndexOf);
+                console.log(subPath);
+                newDir = aPath[0] + "/.zfs/snapshot/" + selectedPath + subPath;
+                console.log(newDir);
+            } else {
+                newDir = selectedCompletePath;
+            }
+        }
+
+        this.setState({selectedFs: newDir})
     }
 
     render() {
