@@ -20,7 +20,7 @@ class Table extends Component {
         // Fitxategia karpeta bada, zuhaitza eguneratu edo ez egin ezer
         if ( file.item.type === "file") {
             const BASEURL = config.API_URL + "download?dir=";
-            window.location.href =BASEURL + file.item.path;
+            window.location.href =BASEURL + file.item.path + "/" + file.item.file;
         } else {
             // this.props.onFolderClick(file.item.path+"/"+file.item.name);
             if ( file.item.name === '..') {
@@ -127,6 +127,21 @@ class Table extends Component {
     }
 
     render() {
+        const lastDir = this.props.selectedFs.slice(0,this.props.selectedFs.lastIndexOf('/'));
+        const item = {
+                path: lastDir,
+                name: "..",
+                children: [],
+                size: 0,
+                atime: "2017-07-12T11:03:07.580Z",
+                mtime: "2011-07-12T12:02:38.000Z",
+                ctime: "2017-06-28T05:59:59.563Z",
+                birthtime: "2017-06-28T05:59:59.563Z",
+                mode: "0770",
+                type: "directory"
+
+        } ;
+
 
         if (this.state.loading) {
             return (
@@ -172,12 +187,92 @@ class Table extends Component {
                     }
                 } else {
                     return (
-                        <h5>Ez dago daturik.</h5>
+                        <table className="table table-condensed table-bordered table-hover table-striped">
+                            <thead>
+                            <tr>
+                                <th>Fitxategia</th>
+                                <th>Mota</th>
+                                <th>Tamaina</th>
+                                <th>Baimenak</th>
+                                <th>Sortua</th>
+                                <th>Aldatua</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+
+                            <tr>
+                                <td>
+                                    <a href="javascript:void(0)" onClick={() => this.handleDownload({item})}>
+                                        <i className={item.type==="directory" ? "fa fa-folder" : "fa fa-file-text" } style={{marginRight: '5px'}} />
+                                        {item.name}
+                                    </a>
+                                </td>
+                                <td>
+                                    {item.type}
+                                </td>
+                                <td>
+                                    { (item.size/1024).toFixed(2) } Kb
+                                </td>
+                                <td>
+                                    { item.mode }
+                                </td>
+                                <td>
+                                    {Moment(item.birthtime).format("YYYY-MM-DD HH:mm:ss")}
+                                </td>
+                                <td>
+                                    {Moment(item.mtime).format("YYYY-MM-DD HH:mm:ss")}
+                                </td>
+
+                            </tr>
+                            <tr><td colSpan={6}>Ez dago daturik</td></tr>
+
+                            </tbody>
+                        </table>
                     )
                 }
             } else {
                 return (
-                    <h5>Ez dago daturik.</h5>
+                    <table className="table table-condensed table-bordered table-hover table-striped">
+                        <thead>
+                        <tr>
+                            <th>Fitxategia</th>
+                            <th>Mota</th>
+                            <th>Tamaina</th>
+                            <th>Baimenak</th>
+                            <th>Sortua</th>
+                            <th>Aldatua</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+
+                            <tr>
+                                <td>
+                                    <a href="javascript:void(0)" onClick={() => this.handleDownload({item})}>
+                                        <i className={item.type==="directory" ? "fa fa-folder" : "fa fa-file-text" } style={{marginRight: '5px'}} />
+                                        {item.name}
+                                    </a>
+                                </td>
+                                <td>
+                                    {item.type}
+                                </td>
+                                <td>
+                                    { (item.size/1024).toFixed(2) } Kb
+                                </td>
+                                <td>
+                                    { item.mode }
+                                </td>
+                                <td>
+                                    {Moment(item.birthtime).format("YYYY-MM-DD HH:mm:ss")}
+                                </td>
+                                <td>
+                                    {Moment(item.mtime).format("YYYY-MM-DD HH:mm:ss")}
+                                </td>
+
+                            </tr>
+                            <tr><td colspan="6">Ez dago daturik</td></tr>
+
+                        </tbody>
+                    </table>
                 )
             }
             return (
@@ -219,13 +314,14 @@ class Table extends Component {
                                     <td>
                                         {Moment(item.mtime).format("YYYY-MM-DD HH:mm:ss")}
                                     </td>
+                                </tr>
+                            );
 
-                                </tr>);
                         })
                     }
                     </tbody>
                 </table>
-            );
+            )
         }
     }
 }
