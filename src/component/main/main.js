@@ -72,7 +72,7 @@ class Main extends Component {
     handleSelect(option) {
         console.log("Main - handleSelect");
         let selectedPath = option.target.value;
-        let selectedData = option.target[option.target.selectedIndex].getAttribute('data-dir')
+        let selectedData = option.target[option.target.selectedIndex].getAttribute('data-dir');
         let selectedCompletePath = selectedData + "/.zfs/snapshot/" + selectedPath;
 
         this.setState({selectedFs: selectedCompletePath})

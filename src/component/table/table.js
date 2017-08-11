@@ -22,7 +22,13 @@ class Table extends Component {
             const BASEURL = config.API_URL + "download?dir=";
             window.location.href =BASEURL + file.item.path;
         } else {
-            this.props.onFolderClick(file.item.path+"/"+file.item.name);
+            // this.props.onFolderClick(file.item.path+"/"+file.item.name);
+            if ( file.item.name === '..') {
+                this.props.onFolderClick(file.item.path);
+            } else {
+                this.props.onFolderClick(file.item.path+"/"+file.item.name);
+            }
+
         }
     }
 
@@ -117,7 +123,6 @@ class Table extends Component {
         if(JSON.stringify(this.props.selectedFs) !== JSON.stringify(nextProps.selectedFs)) // Check if it's a new user, you can also use some unique, like the ID
         {
             this.updateTable(nextProps.selectedFs);
-            // this.updateSnapshoots(nextProps.selectedFs);
         }
     }
 
