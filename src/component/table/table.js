@@ -13,6 +13,11 @@ class Table extends Component {
             snapshoots: [],
         };
         this.handleDownload = this.handleDownload.bind(this);
+        this.handleChecked = this.handleChecked.bind(this)
+    }
+
+    handleChecked(item) {
+        console.log(item);
     }
 
     handleDownload(file) {
@@ -187,7 +192,7 @@ class Table extends Component {
                     }
                 } else {
                     return (
-                        <table className="table table-condensed table-bordered table-hover table-striped">
+                        <table className="table table-condensed table-bordered table-hover table-striped tableNoFiles">
                             <thead>
                             <tr>
                                 <th>Fitxategia</th>
@@ -232,7 +237,7 @@ class Table extends Component {
                 }
             } else {
                 return (
-                    <table className="table table-condensed table-bordered table-hover table-striped">
+                    <table className="table table-condensed table-bordered table-hover table-striped tableNoFilesElse">
                         <thead>
                         <tr>
                             <th>Fitxategia</th>
@@ -279,6 +284,11 @@ class Table extends Component {
                 <table className="table table-condensed table-bordered table-hover table-striped">
                     <thead>
                     <tr>
+                        <th>
+                            <button id="cmdDownloadFolder" className="btn btn-xs btn-primary" onClick={() => this.downloadFolder({ item })}>
+                                <i className="fa fa-download" aria-hidden="true" />
+                            </button>
+                        </th>
                         <th>Fitxategia</th>
                         <th>Mota</th>
                         <th>Tamaina</th>
@@ -293,6 +303,7 @@ class Table extends Component {
                         nirefs.map((item, i) => {
                             return (
                                 <tr key={i} >
+                                    <td><input type="checkbox" onChange={() => this.handleChecked({item})}/></td>
                                     <td>
                                         <a href="javascript:void(0)" onClick={() => this.handleDownload({item})}>
                                             <i className={item.type==="directory" ? "fa fa-folder" : "fa fa-file-text" } style={{marginRight: '5px'}} />
