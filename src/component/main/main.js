@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
 import Server from "../servers/server";
-import Sidebar from "../sidebar/sidebar";
 import Table from "../table/table";
 import Errorea from "./errorea"
 import {FormControl, ControlLabel} from 'react-bootstrap';
@@ -109,7 +108,12 @@ class Main extends Component {
             const KARPETA = this.state.selectedFs.substring(indices[4]);
             const BASE = this.state.selectedFs.split(KARPETA)[0];
 
-            newDir = BASE + "/.zfs/snapshot/" + selectedPath + KARPETA;
+            if (BASE.length > 0) {
+                newDir = BASE + "/.zfs/snapshot/" + selectedPath + KARPETA;
+            } else {
+                newDir = KARPETA + "/.zfs/snapshot/" + selectedPath;
+            }
+
         }
 
         this.setState({selectedFs: newDir})

@@ -11,13 +11,33 @@ class Table extends Component {
             loading: true,
             myfs: [],
             snapshoots: [],
+            itemsToDownload: [],
         };
         this.handleDownload = this.handleDownload.bind(this);
-        this.handleChecked = this.handleChecked.bind(this)
+        this.handleChecked = this.handleChecked.bind(this);
+        this.downloadFolder = this.downloadFolder.bind(this);
+    }
+
+    downloadFolder() {
+        const url = config.API_URL + 'jetsi';
+        axios({
+            url: url,
+            method: 'post',
+            data: { fs: this.state.itemsToDownload },
+            responseType: 'blob', // important
+        }).then((response) => {
+            const url = window.URL.createObjectURL(new Blob([response.data]));
+            const link = document.createElement('a');
+            link.href = url;
+            link.setAttribute('download', 'file.zip');
+            document.body.appendChild(link);
+            link.click();
+        });
     }
 
     handleChecked(item) {
-        console.log(item);
+        var joined = this.state.itemsToDownload.concat(item);
+        this.setState({ itemsToDownload: joined })
     }
 
     handleDownload(file) {
@@ -285,7 +305,7 @@ class Table extends Component {
                     <thead>
                     <tr>
                         <th>
-                            <button id="cmdDownloadFolder" className="btn btn-xs btn-primary" onClick={() => this.downloadFolder({ item })}>
+                            <button id="cmdDownloadFolder" className="btn btn-xs btn-primary" onClick={() => this.downloadFolder()}>
                                 <i className="fa fa-download" aria-hidden="true" />
                             </button>
                         </th>
