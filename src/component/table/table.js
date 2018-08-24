@@ -11,7 +11,7 @@ class Table extends Component {
       loading: true,
       myfs: [],
       snapshoots: [],
-      itemsToDownload: []
+      itemsToDownload: [],
     };
     this.handleDownload = this.handleDownload.bind(this);
     this.handleChecked = this.handleChecked.bind(this);
@@ -37,8 +37,36 @@ class Table extends Component {
   }
 
   handleChecked(item) {
-    var joined = this.state.itemsToDownload.concat(item);
-    this.setState({ itemsToDownload: joined });
+    let $ff="";
+    if ( item.item.type === "directory") {
+      $ff = item.item.path + "/" + item.item.name + "/";
+    } else {
+      $ff = item.item.path + "/" + item.item.name;
+    }
+
+    let $badago = false;
+    let newlist = {};
+    // Iadanik baldin badago, ezabatu
+    for(var i = 0; i < this.state.itemsToDownload.length; i++){
+      if(this.state.itemsToDownload[i] == $ff){
+        let array = this.state.itemsToDownload.filter(item => item !== $ff);
+        $badago = true;
+        this.setState({ itemsToDownload: array });
+      }
+    }
+
+    if ( $badago === false ) {
+      this.state.itemsToDownload.push($ff)
+      this.setState(
+        this.state
+      );
+
+
+      console.log(this.state.itemsToDownload)
+    }
+
+
+
   }
 
   handleDownload(file) {
@@ -321,7 +349,7 @@ class Table extends Component {
                   className="btn btn-xs btn-primary"
                   onClick={() => this.downloadFolder()}
                 >
-                  <i className="fa fa-download" aria-hidden="true" />
+                  <i className="fa fa-download" aria-hidden="true" /> ( {this.state.itemsToDownload.length} )
                 </button>
               </th>
               <th>Fitxategia</th>
