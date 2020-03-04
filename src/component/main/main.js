@@ -22,6 +22,13 @@ class Main extends Component {
     this.handleSelect = this.handleSelect.bind(this);
   }
 
+  componentDidMount() {
+    let search = window.location.search;
+    let params = new URLSearchParams(search);
+    let foo = params.get('qq');
+    console.log(foo);
+  }
+
   handleError(text) {
     this.setState({ erroreTextua: text });
   }

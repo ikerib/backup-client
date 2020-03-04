@@ -47,8 +47,8 @@ class Table extends Component {
     let $badago = false;
     let newlist = {};
     // Iadanik baldin badago, ezabatu
-    for(var i = 0; i < this.state.itemsToDownload.length; i++){
-      if(this.state.itemsToDownload[i] == $ff){
+    for(let i = 0; i < this.state.itemsToDownload.length; i++){
+      if(this.state.itemsToDownload[i] === $ff){
         let array = this.state.itemsToDownload.filter(item => item !== $ff);
         $badago = true;
         this.setState({ itemsToDownload: array });
@@ -56,7 +56,7 @@ class Table extends Component {
     }
 
     if ( $badago === false ) {
-      this.state.itemsToDownload.push($ff)
+      this.state.itemsToDownload.push($ff);
       this.setState(
         this.state
       );
@@ -73,9 +73,11 @@ class Table extends Component {
     console.log("Table - handleDownload");
     // Fitxategia karpeta bada, zuhaitza eguneratu edo ez egin ezer
     if (file.item.type === "file") {
+      console.log("is FILE");
       const BASEURL = config.API_URL + "download?dir=";
       window.location.href = BASEURL + file.item.path + "/" + file.item.file;
     } else {
+      console.log("is FOLDER");
       // this.props.onFolderClick(file.item.path+"/"+file.item.name);
       if (file.item.name === "..") {
         this.props.onFolderClick(file.item.path);
@@ -333,7 +335,7 @@ class Table extends Component {
                 <td>{Moment(item.mtime).format("YYYY-MM-DD HH:mm:ss")}</td>
               </tr>
               <tr>
-                <td colspan="6">Ez dago daturik</td>
+                <td colSpan="6">Ez dago daturik</td>
               </tr>
             </tbody>
           </table>
