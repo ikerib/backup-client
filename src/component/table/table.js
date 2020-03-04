@@ -102,7 +102,13 @@ class Table extends Component {
     axios
       .get(url)
       .then(res => {
-        const myfs = res.data;
+        let myfs="";
+        if (res.data !== null) {
+          myfs = res.data;
+        } else {                    
+          myfs = [];
+        }
+        
         this.setState({ myfs });
         this.setState({ loading: false });
       })
